@@ -24,17 +24,24 @@ class RLNode:
     first: Row
     rest: LinkedList
 
+#represents string as float
+def is_float(val: str) -> Optional[float]:
+    if val == "":
+        return None
+    else:
+        return float(val)
+    
 #converts an array to a row
 def array_to_row(array: List[str]) -> Row:
     return Row(
         array[0], 
         int(array[1]),
-        array[2], 
-        array[3], 
-        array[4], 
-        array[5], 
-        array[6], 
-        array[7],
+        is_float(array[2]), 
+        is_float(array[3]),
+        is_float(array[4]),
+        is_float(array[5]),
+        is_float(array[6]),
+        is_float(array[7]),
     )
 
 #reads a csv lines and returns a linked list
