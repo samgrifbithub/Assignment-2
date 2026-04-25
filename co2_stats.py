@@ -102,48 +102,38 @@ def answer_2(lst:LinkedList) -> LinkedList:
 
 #finds all the rows higher than american's in 1990
 def answer_3(lst: LinkedList) -> LinkedList:
-    def us_1990(row: Row) -> bool:
-        return row.country == "United States" and row.year == 1990
-    us_1990 = filter(us_1990, lst)
+    us_1990 = filter(lst, "country", "equal", "United States")
+    us_1990 = filter(us_1990, "year", "equal", 1990)
     us_per_capita = us_1990.first.total_co2_emissions_excluding_lucf_per_capita
-    def higher_than_us(row: Row) -> bool:
-        return row.total_co2_emissions_excluding_lucf_per_capita > us_per_capita
-    return filter(higher_than_us, lst)  
+    return filter(lst, "total_co2_emissions_excluding_lucf_per_capita", "greater_than", us_per_capita)
 
 #finds all the rows higher than american's in 2020
 def answer_4(lst: LinkedList) -> LinkedList:
-    def us_2020(row: Row) -> bool:
-        return row.country == "United States" and row.year == 2020
-    us_2020 = filter(us_2020, lst)
+    us_2020 = filter(lst, "country", "equal", "United States")
+    us_2020 = filter(us_2020, "year", "equal", 2020)
     us_per_capita = us_2020.first.total_co2_emissions_excluding_lucf_per_capita
-    def higher_than_us(row: Row) -> bool:
-        return row.total_co2_emissions_excluding_lucf_per_capita > us_per_capita
-    return filter(higher_than_us, lst) 
+    return filter(lst, "total_co2_emissions_excluding_lucf_per_capita", "greater_than", us_per_capita)
 
 #finds population of some bum ass town named luxemboureg in 2014
 def answer_5(lst: LinkedList) -> float:
-    def is_luxembourg_2014(row: Row) -> bool:
-        return row.country == "Luxembourg" and row.year == 2014
-    lux = filter(is_luxembourg_2014, lst)
+    lux = filter(lst, "country", "equal", "Luxembourg")
+    lux = filter(lux, "year", "equal", 2014)
     return lux.first.total_co2_emissions_excluding_lucf / lux.first.total_co2_emissions_excluding_lucf_per_capita
 
 #finds chinese gas emissions from 1990 to 2020
 def answer_6(lst: LinkedList) -> float:
-    def is_china_1990(row: Row) -> bool:
-        return row.country == "China" and row.year == 1990
-    def is_china_2020(row: Row) -> bool:
-        return row.country == "China" and row.year == 2020
-    china_1990 = filter(is_china_1990, lst).first.electricity_and_heat_co2_emissions
-    china_2020 = filter(is_china_2020, lst).first.electricity_and_heat_co2_emissions
-    return china_2020 / china_1990
+    china_1990 = filter(lst, "country", "equal", "China")
+    china_1990 = filter(china_1990, "year", "equal", 1990)
+    china_2020 = filter(lst, "country", "equal", "China")
+    china_2020 = filter(china_2020, "year", "equal", 2020)
+    return china_2020.first.electricity_and_heat_co2_emissions / china_1990.first.electricity_and_heat_co2_emissions
 
 #predict china emissions in 2070
 def answer_7(lst: LinkedList) -> float:
-    def is_china_2020(row: Row) -> bool:
-        return row.country == "China" and row.year == 2020
+    china_2020 = filter(lst, "country", "equal", "China")
+    china_2020 = filter(china_2020, "year", "equal", 2020)
     multiplier = answer_6(lst)
-    china_2020 = filter(is_china_2020, lst).first.electricity_and_heat_co2_emissions
-    return china_2020 * (multiplier ** 50)
+    return china_2020.first.electricity_and_heat_co2_emissions * (multiplier ** 50)
 
 class Tests(unittest.TestCase):
     def test_listlen(self):
