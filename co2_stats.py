@@ -29,16 +29,16 @@ def array_to_row(array: List[str]) -> Row:
     return Row(
         array[0], 
         int(array[1]),
-        float(array[2]), 
-        float(array[3]), 
-        float(array[4]), 
-        float(array[5]), 
-        float(array[6]), 
-        float(array[7]),
+        array[2], 
+        array[3], 
+        array[4], 
+        array[5], 
+        array[6], 
+        array[7],
     )
 
 #reads a csv lines and returns a linked list
-def read_csv_lines(filename: str) -> LinkedList:
+def read_csv_lines (filename: str) -> LinkedList:
     expected_labels : List[str] = ['country',
         'year',
         'electricity_and_heat_co2_emissions',
@@ -64,7 +64,7 @@ def listlen(lst: LinkedList) -> int:
         case None:
             return 0
         case RLNode(_,rest):
-            return 1 + listlen(rest)
+            return 1+ listlen(rest)
 
 Check = Literal["less_than", "equal", "greater_than"]
 
@@ -72,32 +72,32 @@ Check = Literal["less_than", "equal", "greater_than"]
 def verify(row: Row, domain: str, check: Check, value: Any) -> bool:
     domain = getattr(row, domain)
     if domain is None:
-        return False
-    if check == 'less_than':
-        return domain < value
+         return False
+    if check == 'less than':
+         return domain < value
     elif check == 'equal':
-        return domain == value
+         return domain == value
     elif check == "greater_than":
-        return domain > value
+         return domain > value
     else:
-        raise ValueError("Incorrect Check")
+         raise ValueError("Incorrect Check")
 
 #filters a linkedlist based on check
-def filter(lst: LinkedList, domain: str, check: Check, value: Any) -> LinkedList:
-    if lst is None:
+def filter(lst: LinkedList, domain: str, check: Check, value:Any) -> LinkedList:
+     if lst is None:
         return None
-    filtered = filter(lst.rest, domain, check, value)
-    if verify(lst.first, domain, check, value):
-        return RLNode(lst.first, filtered)
-    else:
+     filtered = filter(lst.rest, domain, check, value)
+     if verify(lst.first, domain, check, value):
+          return RLNode(lst.first, filtered)
+     else:
         return filtered
-
+     
 #counts # of countries 
-def answer_1(lst: LinkedList) -> int:
-    return listlen(lst) // 30
+def answer_1(lst:LinkedList)-> int:
+     return listlen(lst)//30
 
 #finds all the Mexican Rows
-def answer_2(lst: LinkedList) -> LinkedList:
+def answer_2(lst:LinkedList) -> LinkedList:
     return filter(lst, 'country', 'equal', "Mexico")
 
 #finds all the rows higher than american's in 1990
@@ -114,7 +114,7 @@ def answer_4(lst: LinkedList) -> LinkedList:
     us_per_capita = us_2020.first.total_co2_emissions_excluding_lucf_per_capita
     return filter(lst, "total_co2_emissions_excluding_lucf_per_capita", "greater_than", us_per_capita)
 
-#finds population of luxembourg in 2014
+#finds population of some bum ass town named luxemboureg in 2014
 def answer_5(lst: LinkedList) -> float:
     lux = filter(lst, "country", "equal", "Luxembourg")
     lux = filter(lux, "year", "equal", 2014)
@@ -166,6 +166,5 @@ class Tests(unittest.TestCase):
         result = read_csv_lines("sample-file.csv")
         self.assertTrue(result is not None)
         self.assertEqual(result.first.country, "Lithuania")
-
 if (__name__ == '__main__'):
     unittest.main()
